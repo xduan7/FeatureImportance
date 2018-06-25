@@ -59,10 +59,8 @@ def indep_tree_score(data: dict,
                 train_test_split(x, target, random_state=random_state)
 
             # scores = cross_val_score(model, X, y, cv=10)
-            X_train_ = decomp.fit_transform(x_train)
-            X_test_ = decomp.transform(x_test)
-
-            model_str = model_name + ' on Normalized Data'
+            x_train_ = decomp.fit_transform(x_train)
+            x_test_ = decomp.transform(x_test)
 
             # Try and find the best model
             # Build a model with the best hyper parameters
@@ -90,7 +88,7 @@ def indep_tree_score(data: dict,
                     n_jobs=-1,
                     scoring='accuracy')
 
-                grid_search.fit(X_train_, y_train)
+                grid_search.fit(x_train_, y_train)
                 model_best_params = grid_search.best_params_.copy()
                 model_best_params.pop('clf')
                 # print(model_best_params)
@@ -127,7 +125,7 @@ def indep_tree_score(data: dict,
                     n_jobs=-1,
                     scoring='accuracy')
 
-                grid_search.fit(X_train_, y_train)
+                grid_search.fit(x_train_, y_train)
                 model_best_params = grid_search.best_params_.copy()
                 model_best_params.pop('clf')
                 # print(model_best_params)
@@ -142,8 +140,8 @@ def indep_tree_score(data: dict,
             else:
                 model = None
 
-            model.fit(X_train_, y_train)
-            accuracy = model.score(X_test_, y_test)
+            model.fit(x_train_, y_train)
+            accuracy = model.score(x_test_, y_test) * 100
 
             scores = decomp.inverse_transform(
                 model.feature_importances_.reshape(1, -1)).reshape(-1)

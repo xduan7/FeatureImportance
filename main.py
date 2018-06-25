@@ -16,6 +16,7 @@ from tree_score import tree_score
 from feature_elim_score import feature_elim_score
 from feature_rplc_score import feature_rplc_score
 from indep_tree_score import indep_tree_score
+from deep_explain import deep_explain
 
 
 if __name__ == '__main__':
@@ -36,16 +37,25 @@ if __name__ == '__main__':
     #            params=best_params,
     #            random_state=RAND_SEED)
 
-    # feature_elim_score(data=data,
+    # feature_rplc_score(data=data,
     #                    target=y,
     #                    params=best_params,
+    #                    trained=False,
     #                    random_state=RAND_SEED)
 
     # feature_rplc_score(data=data,
     #                    target=y,
     #                    params=best_params,
+    #                    trained=True,
     #                    random_state=RAND_SEED)
 
-    indep_tree_score(data=data,
-                     target=y,
-                     random_state=RAND_SEED)
+    # indep_tree_score(data=data,
+    #                  target=y,
+    #                  random_state=RAND_SEED)
+
+    # deep_explain(data=data,
+    #              target=y,
+    #              num_features=20,
+    #              random_state=RAND_SEED)
+
+
