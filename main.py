@@ -37,11 +37,13 @@ if __name__ == '__main__':
     #            params=best_params,
     #            random_state=RAND_SEED)
 
-    # feature_rplc_score(data=data,
-    #                    target=y,
-    #                    params=best_params,
-    #                    trained=False,
-    #                    random_state=RAND_SEED)
+    for n in [20]:
+        feature_rplc_score(data=data,
+                           target=y,
+                           params=best_params,
+                           n_components=n,
+                           trained=False,
+                           random_state=RAND_SEED)
 
     # feature_rplc_score(data=data,
     #                    target=y,

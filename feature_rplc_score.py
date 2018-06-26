@@ -15,6 +15,7 @@ from copy import deepcopy
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.decomposition import FastICA, PCA
 from sklearn.svm import SVC, LinearSVC
 from sklearn.neighbors import KNeighborsClassifier
 
@@ -46,6 +47,7 @@ def feature_rplc_score(data: dict,
                        target: np.ndarray,
                        params: dict,
                        trained: bool,
+                       n_components: int = 20,
                        model_names: list = None,
                        random_state: int = 0,
                        show_img: bool = False):
@@ -65,6 +67,8 @@ def feature_rplc_score(data: dict,
     for model_idx, model_name in enumerate(model_names):
 
         for data_idx, (data_name, x) in enumerate(data.items()):
+
+
 
             model_str = model_name + ' on ' + data_name
 
@@ -97,6 +101,14 @@ def feature_rplc_score(data: dict,
             x_train, x_test, y_train, y_test = \
                 train_test_split(x, target, random_state=random_state)
 
+            if n_components != 20:
+                pca = PCA(n_components=n_components)
+                x_train_ = pca.fit_transform(x_train)
+                x_test_ = pca.transform(x_test)
+            else:
+                x_train_ = x_train
+                x_test_ = x_test
+
             if trained:
                 trained_model = deepcopy(untrained_model)
                 trained_model.fit(x_train, y_train)
@@ -104,8 +116,12 @@ def feature_rplc_score(data: dict,
                 trained_model = None
 
             scores = feature_rplc_on_model(
-                x_train, x_test, y_train, y_test,
+                x_train_, x_test_, y_train, y_test,
                 untrained_model, trained_model)
+
+            if n_components != 20:
+                scores = pca.inverse_transform(scores)
+                # scores = np.abs(scores)
 
             indices = np.argsort(scores)
 
@@ -123,10 +139,18 @@ def feature_rplc_score(data: dict,
             plt.xlim([-1, x.shape[1]])
             plt.ylim([np.min(scores) - 0.01, np.max(scores) + 0.01])
 
-    if trained:
-        plt.savefig('./img/feature_rplc(trained)_score.png')
+    if n_components != 20:
+        if trained:
+            plt.savefig('./img/feature(%d)_rplc(trained)_score.png'
+                        % n_components)
+        else:
+            plt.savefig('./img/feature(%d)_rplc(untrained)_score.png'
+                        % n_components)
     else:
-        plt.savefig('./img/feature_rplc(untrained)_score.png')
+        if trained:
+            plt.savefig('./img/feature_rplc(trained)_score.png')
+        else:
+            plt.savefig('./img/feature_rplc(untrained)_score.png')
 
     if show_img:
         plt.show()
