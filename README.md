@@ -1,12 +1,12 @@
 # Feature Importance
-This project aims to explore some commonly used methods for feature importance measusrement, in both classical machine learning and neural network fields. 
+This project aims to explore some commonly used methods for feature importance measurements, in both classical machine learning and neural network fields. 
 
-The term feature 'importance', or 'attribution', or 'relavence', could be quite vague statistically. It is either not mathmetically well-defined, or narrowed to a very specific approach hence not comparable in a larger scope. Generally speaking, there are three categories of importance measurement:
+The term feature 'importance', or 'attribution', or 'relevance', could be quite vague statistically. It is either not mathematically  well-defined, or narrowed to a very specific approach hence not comparable in a larger scope. Generally speaking, there are three categories of importance measurement:
 * [Univariate/Marginal Importance](#univariatemarginal-importance);
 * [Predictive Importance](#predictive-importance);
 * [Causal Importance](#causal-importance); 
 
-A roadmap for this project is shown below. The circle represents the state of data processing, from raw data to a selected range of models, all the way to trained model instances. And the feature importance measurements associated with these states are in the linked squares. Of all the measurements, univariate importance methods are in red, predictive importance methods are in blue, and casual importance methods are in green. 
+A roadmap for this project is shown below. The circle represents the state of data processing, from raw data to a selected range of models, all the way to trained model instances. And the feature importance measurements associated with these states are in the linked squares. Of all the measurements, the univariate importance methods are in red, predictive importance methods are in blue, and casual importance methods are in green. 
 <p align="center">
   <img src="https://github.com/xduan7/FeatureImportance/blob/master/img/feature_importance.png" width="80%">
 </p>
